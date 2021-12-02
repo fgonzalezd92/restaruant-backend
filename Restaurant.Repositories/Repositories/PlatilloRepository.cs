@@ -47,7 +47,7 @@ namespace Restaurant.Repositories.Repositories
             {
                 con.Open();
 
-                return await con.QueryFirstAsync<Platillo>("SELECT Id,Nombre, Tipo, Ingredientes, Peso, Calorias, Precio FROM Platillos WHERE Id = @Id", new { Id = id.ToString()});
+                return await con.QueryFirstOrDefaultAsync<Platillo>("SELECT Id,Nombre, Tipo, Ingredientes, Peso, Calorias, Precio FROM Platillos WHERE Id = @Id", new { Id = id.ToString()});
             }
         }
 

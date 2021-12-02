@@ -26,19 +26,32 @@ namespace Restaurant.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Platillo>> Get(Guid id)
         {
-            return Ok(await _platilloService.Get(id));
+            var platillo = await _platilloService.Get(id);
+
+            if(platillo != null)
+                return Ok(platillo);
+            else
+                return NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Platillo entity)
         {
-            return Ok(await _platilloService.Create(entity));
+            var result = await _platilloService.Create(entity);
+            if(result > 0)
+            {
+                return CreatedAtAction("Create",entity);
+            }
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Platillo>> Delete(Guid id)
         {
-            return Ok(await _platilloService.Delete(id));
+            var elements = await _platilloService.Delete(id);
+            if(elements > 0)
+                return Ok(elements);
+            return NotFound();
         }
 
         [HttpPut]
