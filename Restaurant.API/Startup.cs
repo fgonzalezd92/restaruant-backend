@@ -29,6 +29,15 @@ namespace Restaurant.API
             services.AddScoped<DbConnection>(x => new SqlConnection(Configuration.GetConnectionString("SQLServerConnection")));
             services.AddScoped<IPlatilloRepository, PlatilloRepository>();
             services.AddScoped<IPlatilloService, PlatilloService>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -51,7 +60,7 @@ namespace Restaurant.API
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

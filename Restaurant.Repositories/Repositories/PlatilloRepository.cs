@@ -57,7 +57,7 @@ namespace Restaurant.Repositories.Repositories
             {
                 con.Open();
 
-                return await con.QueryAsync<Platillo>("SELECT Id,Nombre, Tipo, Ingredientes, Peso, Calorias, Precio FROM Platillos");
+                return await con.QueryAsync<Platillo>("SELECT Id,Nombre, Tipo, Ingredientes, Peso, Calorias, Precio FROM Platillos ORDER BY Tipo, Nombre");
             }
         }
 
